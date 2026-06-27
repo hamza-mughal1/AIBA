@@ -28,7 +28,7 @@ _The scope of what it can do is tied to your imagination._
 3. AIBA plans an approach, spawns browser agents, executes, adapts, and delivers.
 4. The conversation stays open. Keep going, or save it for later.
 
-Built on **Google Gemini** (brains), **Playwright** (browser), **pydantic-ai** (type-safe tool calling), and **logfire** (observability).
+Built on **Google Gemini** (brains), **Playwright** (browser), **pydantic-ai** (type-safe tool calling), and **logfire** (observability). Licensed under [APL](LICENSE) — free for personal use, modifications welcome, no commercial use without permission.
 
 ---
 
