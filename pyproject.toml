@@ -1,0 +1,32 @@
+[project]
+name = "aiba"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "logfire[system-metrics]>=4.37.0",
+    "playwright>=1.60.0",
+    "pydantic-ai>=2.0.0",
+    "pydantic-ai-slim[duckduckgo,mcp,web-fetch]>=2.0.0",
+    "pydantic-ai-shields>=0.3.4",
+    "pydantic-settings>=2.14.1",
+    "pyyaml>=6.0",
+    "croniter>=6.0",
+    "rich>=13.0.0",
+    "markdown>=3.10.2",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs-material>=9.6.0",
+    "pyright>=1.1.410",
+    "ruff>=0.15.19",
+]
+
+
+[tool.pyright]
+typeCheckingMode = "standard"
+venvPath = "."
+venv = ".venv"

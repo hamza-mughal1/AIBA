@@ -1,0 +1,12 @@
+/* Nav bar logo — boost from cramped ~24px to readable size */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2.4rem !important;
+  width: auto !important;
+}
+
+/* Pull logo and "AIBA" text closer together */
+.md-header__button.md-logo {
+  margin-right: 0 !important;
+  padding-right: 0rem !important;
+}

@@ -1,0 +1,27 @@
+# AIBA Beats — scheduled autonomous agent runs
+#
+# Each beat is a pre-configured one-shot agent invocation.
+# An external scheduler (cron/launchd/Task Scheduler) should run
+# `uv run python main.py beat run --all` every 5 minutes.
+#
+# To get scheduling instructions for your OS:
+#   uv run python main.py beat schedule
+#
+# CSV files listed in allowed_csvs must pre-exist with header rows.
+# The agent reads CSVs before acting (dedup) and appends after (record).
+
+beats:
+  daily_hackernews_ai_summary:
+    name: "Daily HackerNews AI Summary"
+    schedule: "*/5 * * * *"             # every 5 minutes
+    template: default
+    effort: quick
+    mode: agent                        # agent (single sub-agent) | swarm (orchestrator)
+    sub_agents: 1
+    prompt_extra: "Check the top HackerNews posts and summarize any
+      AI-related threads from the last 24 hours. And append the results to hn_posts.csv. But avoid duplicates."
+    budget_override_usd: 0.25
+    headless: true
+    notify_email: "hamzamughal.personal@gmail.com"
+    allowed_csvs:
+      - hn_posts.csv
