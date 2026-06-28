@@ -1,6 +1,7 @@
 site_name: AIBA 
 site_description: Autonomous internet browsing agent
 site_author: AIBA
+site_url: https://aibacli.tech
 repo_url: https://github.com/hamza-mughal1/AIBA
 repo_name: AIBA
 edit_uri: ""
