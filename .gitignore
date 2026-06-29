@@ -15,7 +15,7 @@ wheels/
 # Playwright MCP
 .playwright-mcp/
 
-rules.md
+ai_rules.md
 skills/
 
 static/
