@@ -1,7 +1,7 @@
 [project]
 name = "aiba"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "AIBA-v1 (autonomous internet browsing agent)"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -23,6 +23,10 @@ dev = [
     "mkdocs-material>=9.6.0",
     "pyright>=1.1.410",
     "ruff>=0.15.19",
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=1.0.0",
+    "pre-commit>=4.6.0",
 ]
 
 
@@ -30,3 +34,63 @@ dev = [
 typeCheckingMode = "standard"
 venvPath = "."
 venv = ".venv"
+
+[tool.ruff]
+# Target your specific Python version
+target-version = "py312"
+
+# Set the maximum line length for both linting and formatting
+line-length = 88
+
+# Files or directories to ignore
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# 1. Rules to ENABLE
+select = [
+    "E",   # pycodestyle errors (standard pep8)
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes (catches unused imports, undefined variables)
+    "I",   # isort (automatically sorts your imports)
+    "B",   # flake8-bugbear (catches design flaws and likely bugs)
+    "UP",  # pyupgrade (forces modern Python syntax)
+    "RUF", # Ruff-specific rules
+]
+
+# 2. Rules to EXPLICITLY IGNORE
+ignore = [
+    "E501",  # Ignore line-length violations (Ruff formatter handles this)
+    "RUF001",  # En-dash in strings (intentional in prompts/UI: "2–3", "1–50")
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Relax strictness inside your test files
+"tests/**/*.py" = ["S101"] # Allow 'assert' statements in tests
+
+[tool.ruff.format]
+# Configure the formatter style
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    # pydantic-ai uses asyncio.get_event_loop() which is deprecated in 3.12+
+    "ignore:There is no current event loop:DeprecationWarning:pydantic_ai",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["src/prompts/templates.py"]
+
+[tool.coverage.report]
+show_missing = true
