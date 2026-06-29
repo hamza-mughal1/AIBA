@@ -12,3 +12,12 @@ repos:
       # Run the linter
       - id: ruff
         args: [ --fix ]
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: uv run pytest --cov=src --cov-branch
+        language: system
+        pass_filenames: false
+        always_run: true
