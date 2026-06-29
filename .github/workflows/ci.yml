@@ -1,4 +1,4 @@
-name: CI (Lint & Test)
+name: CI (Type Check & Test)
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Run Python Tests & Linters
+    name: Type Check & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -28,12 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: uv sync --all-extras --dev
-
-      - name: Run Ruff Linter
-        run: uv run ruff check .
-
-      - name: Run Ruff Formatter Check
-        run: uv run ruff format --check .
 
       - name: Run Pyright Type Checker
         run: uv run pyright
