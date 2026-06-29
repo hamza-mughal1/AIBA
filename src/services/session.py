@@ -43,7 +43,7 @@ def _filter_tool_parts(messages: list[Any]) -> list[Any]:
                     conversation_id=msg.conversation_id,
                     metadata=getattr(msg, "metadata", None),
                     state=getattr(msg, "state", "complete"),
-                )
+                ),
             )
         elif isinstance(msg, ModelResponse):
             kept = [p for p in msg.parts if getattr(p, "part_kind", None) == "text"]
@@ -65,7 +65,7 @@ def _filter_tool_parts(messages: list[Any]) -> list[Any]:
                     conversation_id=msg.conversation_id,
                     metadata=getattr(msg, "metadata", None),
                     state=getattr(msg, "state", "complete"),
-                )
+                ),
             )
         else:
             filtered.append(msg)
@@ -73,7 +73,8 @@ def _filter_tool_parts(messages: list[Any]) -> list[Any]:
 
 
 def trim_history(
-    messages: list[Any], max_count: int = MAX_HISTORY_MESSAGES
+    messages: list[Any],
+    max_count: int = MAX_HISTORY_MESSAGES,
 ) -> list[Any]:
     """Strip tool noise, keep system prompt + recent user/model turns.
 
@@ -95,9 +96,9 @@ def trim_history(
         if hasattr(msg, "parts"):
             for part in msg.parts:
                 if getattr(part, "part_kind", None) == "user-prompt":
-                    return [messages[0]] + messages[i:]
+                    return [messages[0], *messages[i:]]
 
-    return [messages[0]] + messages[-(max_count - 1) :]
+    return [messages[0], *messages[-(max_count - 1):]]
 
 
 def save_session(name: str, history: list[Any], settings: dict[str, Any]) -> None:
@@ -156,7 +157,7 @@ def print_history(messages: list[Any]) -> None:
     print()
     print(hr("─", "dim"))
     print(
-        f"  {C['bold']}{C['purple']}Conversation History{C['reset']}  ({len(messages)} messages)"
+        f"  {C['bold']}{C['purple']}Conversation History{C['reset']}  ({len(messages)} messages)",
     )
     print(hr("─", "dim"))
 

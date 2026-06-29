@@ -10,13 +10,13 @@ from __future__ import annotations
 import json
 import smtplib
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
-import yaml
 import markdown
+import yaml
 from croniter import croniter
 from pydantic import BaseModel, EmailStr, Field, model_validator
 
@@ -36,7 +36,7 @@ LOGS_DIR = Path("logs")
 
 class BeatConfig(BaseModel):
     """Validated beat configuration loaded from beats.yaml."""
-    
+
     name: str = Field(
         ...,
         description="Unique name for this beat (used in logs and state)",
@@ -97,7 +97,7 @@ class BeatConfig(BaseModel):
         if self.template not in available:
             raise ValueError(
                 f"Template '{self.template}' not found. "
-                f"Available: {', '.join(available)}"
+                f"Available: {', '.join(available)}",
             )
         return self
 
@@ -105,18 +105,18 @@ class BeatConfig(BaseModel):
     def _effort_valid(self) -> BeatConfig:
         try:
             EffortMode(self.effort)
-        except ValueError:
+        except ValueError as err:
             raise ValueError(
                 f"Effort '{self.effort}' is not a valid EffortMode. "
-                f"Valid: {', '.join(e.value for e in EffortMode)}"
-            )
+                f"Valid: {', '.join(e.value for e in EffortMode)}",
+            ) from err
         return self
 
     @model_validator(mode="after")
     def _mode_valid(self) -> BeatConfig:
         if self.mode not in ("agent", "swarm"):
             raise ValueError(
-                f"Mode '{self.mode}' is invalid. Must be 'agent' or 'swarm'."
+                f"Mode '{self.mode}' is invalid. Must be 'agent' or 'swarm'.",
             )
         return self
 
@@ -126,7 +126,7 @@ class BeatConfig(BaseModel):
         try:
             croniter(self.schedule)
         except (ValueError, KeyError) as exc:
-            raise ValueError(f"Invalid cron expression '{self.schedule}': {exc}")
+            raise ValueError(f"Invalid cron expression '{self.schedule}': {exc}") from exc
 
         return self
 
@@ -155,12 +155,12 @@ def is_due(schedule: str, last_run: datetime | None) -> bool:
     if last_run is None:
         return True
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     last_naive = last_run.replace(tzinfo=None)
     it = croniter(schedule, last_naive)
     next_run: datetime = it.get_next(datetime)
 
-    return now >= next_run.replace(tzinfo=timezone.utc)
+    return now >= next_run.replace(tzinfo=UTC)
 
 
 def load_state() -> dict[str, dict[str, Any]]:
@@ -187,7 +187,7 @@ def log_beat_run(beat_name: str, result: dict[str, Any]) -> None:
     beat_log_dir = LOGS_DIR / beat_name
     beat_log_dir.mkdir(parents=True, exist_ok=True)
 
-    timestamp = datetime.now(timezone.utc)
+    timestamp = datetime.now(UTC)
     iso = timestamp.strftime("%Y-%m-%dT%H%M%S")
 
     log_entry = {
@@ -203,7 +203,8 @@ def log_beat_run(beat_name: str, result: dict[str, Any]) -> None:
     }
 
     (beat_log_dir / f"{iso}.json").write_text(
-        json.dumps(log_entry, indent=2, default=str), encoding="utf-8"
+        json.dumps(log_entry, indent=2, default=str),
+        encoding="utf-8",
     )
 
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
@@ -252,11 +253,11 @@ def run_beat(name: str) -> dict[str, Any]:
             "tool_calls": 0,
         }
 
-    started_at = datetime.now(timezone.utc)
+    started_at = datetime.now(UTC)
     t0 = time.monotonic()
     settings = AibaSettings()
 
-    # Save references to restore after the current run to avoid side effects 
+    # Save references to restore after the current run to avoid side effects
     # on upcoming beats.
     old_allowed = get_beat_allowed_csvs()
     old_headless = settings.playwright_headless
@@ -401,7 +402,7 @@ def os_schedule_instructions() -> str:
             "1. Open Task Scheduler",
             "2. Create Basic Task → Trigger: Daily, repeat every 5 minutes",
             "3. Action: Start a program",
-            f"   Program: {cmd.split()[0]}",
+            f"   Program: {cmd.split(maxsplit=1)[0]}",
             f"   Arguments: {' '.join(cmd.split()[1:])}",
             f"   Start in: {cwd}",
         ]
@@ -412,10 +413,11 @@ def os_schedule_instructions() -> str:
 
 
 def _send_beat_summary(
-    beat: BeatConfig, result: dict[str, Any], settings: AibaSettings
+    beat: BeatConfig,
+    result: dict[str, Any],
+    settings: AibaSettings,
 ) -> None:
     """Send a professional HTML email with the beat run summary."""
-
     if not beat.notify_email or not settings.sender_email:
         return
 
@@ -437,10 +439,14 @@ def _send_beat_summary(
     # --- Convert agent markdown output to HTML ---
 
     raw_output = result.get("output") or ""
-    output_html = markdown.markdown(
-        raw_output,
-        extensions=["fenced_code", "codehilite", "tables", "sane_lists"],
-    ) if raw_output else "<p><em>No output</em></p>"
+    output_html = (
+        markdown.markdown(
+            raw_output,
+            extensions=["fenced_code", "codehilite", "tables", "sane_lists"],
+        )
+        if raw_output
+        else "<p><em>No output</em></p>"
+    )
 
     # --- Build status badge ---
     if status == "success":
@@ -460,9 +466,7 @@ def _send_beat_summary(
     errors = result.get("errors", [])
     errors_html = ""
     if errors:
-        errors_list = "".join(
-            f"<li>{e}</li>" for e in errors
-        )
+        errors_list = "".join(f"<li>{e}</li>" for e in errors)
         errors_html = f"""
         <tr>
             <td style="padding:12px 0 4px;">
@@ -525,19 +529,19 @@ def _send_beat_summary(
                                 <tr>
                                     <td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.5;">
                                         <strong style="color:#6b7280;display:inline-block;width:100px;">Duration</strong>
-                                        <span style="color:#111827;">{result.get('duration_s', 0)}s</span>
+                                        <span style="color:#111827;">{result.get("duration_s", 0)}s</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.5;">
                                         <strong style="color:#6b7280;display:inline-block;width:100px;">Cost</strong>
-                                        <span style="color:#111827;">${result.get('cost_usd', 0):.4f}</span>
+                                        <span style="color:#111827;">${result.get("cost_usd", 0):.4f}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.5;">
                                         <strong style="color:#6b7280;display:inline-block;width:100px;">Tool calls</strong>
-                                        <span style="color:#111827;">{result.get('tool_calls', 0)}</span>
+                                        <span style="color:#111827;">{result.get("tool_calls", 0)}</span>
                                     </td>
                                 </tr>
                                 {errors_html}
