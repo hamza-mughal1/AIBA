@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
 
+      - name: Create dummy .env for tests
+        run: echo 'GEMINI_API_KEY="test-key"' > .env
+
       - name: Run Pyright Type Checker
         run: uv run pyright
 
