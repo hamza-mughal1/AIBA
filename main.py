@@ -52,7 +52,7 @@ if __name__ == "__main__":
         print()
         print(R.hr("─", "dim"))
         print(
-            f"  {R.C['green']}✓{R.C['reset']} Resuming conversation with {agent_name} ({len(history)} messages)"
+            f"  {R.C['green']}✓{R.C['reset']} Resuming conversation with {agent_name} ({len(history)} messages)",
         )
         print(R.hr("─", "dim"))
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             def all_messages(self):
                 return history
 
-        fake_result = cast(AgentRunResult, _LoadedResult())
+        fake_result = cast("AgentRunResult", _LoadedResult())
         repl.run(agent_fn, fake_result, config, agent_name, session_settings)
         exit(0)
 
@@ -80,10 +80,10 @@ if __name__ == "__main__":
     if not _settings.user_profile:
         print(
             f"\n  {R.C['yellow']}⚠{R.C['reset']}  USER_PROFILE is empty in .env —"
-            f" templates like job_search will have no context."
+            f" templates like job_search will have no context.",
         )
         print(
-            f"  {R.C['dim']}Set USER_PROFILE in .env with your skills and experience.{R.C['reset']}\n"
+            f"  {R.C['dim']}Set USER_PROFILE in .env with your skills and experience.{R.C['reset']}\n",
         )
 
     prompt = template.generate_prompt(_settings.user_profile, extra)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
             f"{R.C['yellow']}║{R.C['reset']}  {R.C['bold']}RESOURCE LIMIT HIT{R.C['reset']}\n"
             f"{R.C['yellow']}║{R.C['reset']}  {exc}\n"
             f"{R.C['yellow']}║{R.C['reset']}  Rerun with a higher effort mode.\n"
-            f"{R.C['yellow']}╚{'═' * (w - 2)}╝{R.C['reset']}\n"
+            f"{R.C['yellow']}╚{'═' * (w - 2)}╝{R.C['reset']}\n",
         )
     except Exception as exc:
         w = shutil.get_terminal_size().columns
@@ -129,5 +129,5 @@ if __name__ == "__main__":
             f"\n{R.C['red']}╔{'═' * (w - 2)}╗{R.C['reset']}\n"
             f"{R.C['red']}║{R.C['reset']}  {R.C['bold']}FATAL ERROR{R.C['reset']}\n"
             f"{R.C['red']}║{R.C['reset']}  {type(exc).__name__}: {exc}\n"
-            f"{R.C['red']}╚{'═' * (w - 2)}╝{R.C['reset']}\n"
+            f"{R.C['red']}╚{'═' * (w - 2)}╝{R.C['reset']}\n",
         )

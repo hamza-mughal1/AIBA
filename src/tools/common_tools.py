@@ -16,6 +16,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 # list[str] = beat mode (only those filenames, empty list = no CSV access).
 _beat_allowed_csvs: list[str] | None = None
 
+
 def set_beat_allowed_csvs(csvs: list[str] | None) -> None:
     """Restrict which CSV files a beat may access (None = REPL, all access)."""
     global _beat_allowed_csvs
@@ -48,7 +49,8 @@ def todo(todos: list[dict[str, Any]] | None = None) -> str:
     lines: list[str] = []
     for t in _todo_state:
         icon = {"pending": "○", "in-progress": "◉", "completed": "✓"}.get(
-            t.get("status", "pending"), "?"
+            t.get("status", "pending"),
+            "?",
         )
         lines.append(f"  {icon} [{t.get('id')}] {t.get('task', '')}")
     return "\n".join(lines)
@@ -63,8 +65,8 @@ def read_csv(filename: str, max_rows: int = 200) -> str:
     Args:
         filename: Just the filename (e.g. 'jobs.csv'), looked up in data/.
         max_rows: Maximum rows to return. Default 200.
-    """
 
+    """
     if "/" in filename or "\\" in filename or filename.startswith(".."):
         return (
             f"ERROR: '{filename}' is not a valid filename. "
@@ -137,8 +139,8 @@ def append_csv(filename: str, rows: list[dict[str, str]]) -> str:
     Args:
         filename: Just the filename (e.g. 'jobs.csv'), looked up in data/.
         rows: List of dicts with column_name → value.
-    """
 
+    """
     if "/" in filename or "\\" in filename or filename.startswith(".."):
         return (
             f"ERROR: '{filename}' is not a valid filename. "
@@ -170,7 +172,7 @@ def append_csv(filename: str, rows: list[dict[str, str]]) -> str:
 
     try:
         existing_headers = csv.DictReader(
-            csv_path.read_text(encoding="utf-8").splitlines()
+            csv_path.read_text(encoding="utf-8").splitlines(),
         ).fieldnames
         if existing_headers is None:
             return f"ERROR: '{filename}' has no header row."

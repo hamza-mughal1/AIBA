@@ -17,6 +17,7 @@ class Template:
         name: Unique identifier (e.g. 'job_search', 'osint').
         description: Human-readable explanation shown in the CLI picker.
         generate_prompt: Callable (user_profile, extra_context) -> prompt string.
+
     """
 
     name: str

@@ -10,9 +10,9 @@ from src.prompts.effort import (
 from src.prompts.models import Template, get_template, list_templates, register_template
 
 __all__ = [
+    "EFFORT_CONFIGS",
     "EffortConfig",
     "EffortMode",
-    "EFFORT_CONFIGS",
     "Template",
     "get_effort_config",
     "get_template",

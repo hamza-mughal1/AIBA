@@ -35,11 +35,11 @@ def beat_cli() -> None:
             print(f"  {R.C['dim']}Sub-agents:{R.C['reset']} {beat.sub_agents}")
             if beat.prompt_extra:
                 print(
-                    f"  {R.C['dim']}Extra:{R.C['reset']}      {beat.prompt_extra[:80]}"
+                    f"  {R.C['dim']}Extra:{R.C['reset']}      {beat.prompt_extra[:80]}",
                 )
             if beat.allowed_csvs:
                 print(
-                    f"  {R.C['dim']}CSVs:{R.C['reset']}       {', '.join(beat.allowed_csvs)}"
+                    f"  {R.C['dim']}CSVs:{R.C['reset']}       {', '.join(beat.allowed_csvs)}",
                 )
             if beat.notify_email:
                 print(f"  {R.C['dim']}Notify:{R.C['reset']}     {beat.notify_email}")
@@ -90,12 +90,12 @@ def beat_cli() -> None:
     print(f"  {R.C['bold']}Usage:{R.C['reset']}")
     print(f"  {R.C['teal']}python main.py beat list{R.C['reset']}       List all beats")
     print(
-        f"  {R.C['teal']}python main.py beat run <name>{R.C['reset']}  Run a single beat"
+        f"  {R.C['teal']}python main.py beat run <name>{R.C['reset']}  Run a single beat",
     )
     print(
-        f"  {R.C['teal']}python main.py beat run --all{R.C['reset']}  Run all due beats"
+        f"  {R.C['teal']}python main.py beat run --all{R.C['reset']}  Run all due beats",
     )
     print(
-        f"  {R.C['teal']}python main.py beat schedule{R.C['reset']}   Show OS scheduler setup"
+        f"  {R.C['teal']}python main.py beat schedule{R.C['reset']}   Show OS scheduler setup",
     )
     print()

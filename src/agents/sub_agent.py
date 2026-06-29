@@ -209,6 +209,7 @@ def read_image(file_path: str) -> ToolReturn:
 
     Args:
         file_path: The absolute or relative path to the image file.
+
     """
     path = Path(file_path)
 
@@ -226,7 +227,7 @@ def read_image(file_path: str) -> ToolReturn:
 
     # 4. Package into BinaryContent and return via ToolReturn
     return ToolReturn(
-        return_value=BinaryContent(data=image_bytes, media_type=mime_type)
+        return_value=BinaryContent(data=image_bytes, media_type=mime_type),
     )
 
 
@@ -246,6 +247,7 @@ def read_and_filter_file(
         end_line: Optional 1-indexed line number to stop reading at (inclusive).
         search_string: Optional substring. If provided, only lines containing this exact text are returned.
         search_regex: Optional Python regular expression. If provided, only lines matching this regex are returned.
+
     """
     path = Path(file_path)
     if not path.is_file():
@@ -255,7 +257,7 @@ def read_and_filter_file(
         # Read all lines from the file
         lines = path.read_text(encoding="utf-8").splitlines()
     except Exception as e:
-        return f"Error reading file: {str(e)}"
+        return f"Error reading file: {e!s}"
 
     output_lines = []
 
@@ -265,7 +267,7 @@ def read_and_filter_file(
         try:
             compiled_regex = re.compile(search_regex)
         except re.error as e:
-            return f"Error: Invalid regular expression pattern: {str(e)}"
+            return f"Error: Invalid regular expression pattern: {e!s}"
 
     # Process line by line (1-indexed for intuitive LLM usage)
     for idx, line in enumerate(lines, start=1):
@@ -308,6 +310,7 @@ def run(
 
     Returns:
         AgentRunResult with .output, .all_messages(), .new_messages(), etc.
+
     """
     config = get_effort_config(effort_mode)
     run_kwargs: dict[str, Any] = {

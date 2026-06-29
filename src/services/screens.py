@@ -15,24 +15,24 @@ def mode() -> str:
     print()
     print(hr())
     print(
-        f"{C['bold']}{C['green']}∞  A I B A{C['reset']}   {C['dim']}Autonomous Internet Browsing Agent{C['reset']}"
+        f"{C['bold']}{C['green']}∞  A I B A{C['reset']}   {C['dim']}Autonomous Internet Browsing Agent{C['reset']}",
     )
     print(hr())
     print()
     print(f"  {C['bold']}{C['teal']}Step 1 — Select Mode{C['reset']}")
     print()
     print(
-        f"  {C['bold']}[1]{C['reset']}  Agent   {C['dim']}Single autonomous agent, full internet access{C['reset']}"
+        f"  {C['bold']}[1]{C['reset']}  Agent   {C['dim']}Single autonomous agent, full internet access{C['reset']}",
     )
     print(
-        f"          {C['dim']}Best for focused tasks, single-domain research.{C['reset']}"
+        f"          {C['dim']}Best for focused tasks, single-domain research.{C['reset']}",
     )
     print()
     print(
-        f"  {C['bold']}[2]{C['reset']}  Swarm   {C['dim']}Orchestrated fleet of parallel sub-agents{C['reset']}"
+        f"  {C['bold']}[2]{C['reset']}  Swarm   {C['dim']}Orchestrated fleet of parallel sub-agents{C['reset']}",
     )
     print(
-        f"          {C['dim']}Best for large-scale research, multi-hop mining.{C['reset']}"
+        f"          {C['dim']}Best for large-scale research, multi-hop mining.{C['reset']}",
     )
     print()
     while True:
@@ -67,7 +67,7 @@ def template() -> str:
         print()
     while True:
         choice = input(
-            f"  {C['teal']}▸{C['reset']}  Enter 1–{len(templates)}: "
+            f"  {C['teal']}▸{C['reset']}  Enter 1–{len(templates)}: ",
         ).strip()
         try:
             idx = int(choice) - 1
@@ -113,13 +113,13 @@ def sub_agents() -> int:
     print(f"  {C['bold']}{C['teal']}Step 4 of 5 — Sub-Agent Pool{C['reset']}")
     print()
     print(
-        f"  How many sub-agents can run in parallel?  {C['dim']}Range 1–50{C['reset']}"
+        f"  How many sub-agents can run in parallel?  {C['dim']}Range 1–50{C['reset']}",
     )
     print("  Higher values = more throughput, more API tokens.")
     print()
     while True:
         raw = input(
-            f"  {C['teal']}▸{C['reset']}  Max sub-agents [{C['dim']}{default}{C['reset']}]: "
+            f"  {C['teal']}▸{C['reset']}  Max sub-agents [{C['dim']}{default}{C['reset']}]: ",
         ).strip()
         if not raw:
             return default
@@ -179,7 +179,7 @@ def session():
     print()
     print(hr())
     print(
-        f"{C['bold']}{C['green']}∞  A I B A{C['reset']}   {C['dim']}Autonomous Internet Browsing Agent{C['reset']}"
+        f"{C['bold']}{C['green']}∞  A I B A{C['reset']}   {C['dim']}Autonomous Internet Browsing Agent{C['reset']}",
     )
     print(hr())
     print()
@@ -198,7 +198,7 @@ def session():
     available = list_sessions()
     if not available:
         print(
-            f"\n  {C['red']}✗{C['reset']}  No saved sessions found in {SESSIONS_DIR}/."
+            f"\n  {C['red']}✗{C['reset']}  No saved sessions found in {SESSIONS_DIR}/.",
         )
         return None
 
@@ -211,7 +211,7 @@ def session():
 
     while True:
         choice = input(
-            f"  {C['teal']}▸{C['reset']}  Enter 1–{len(available)}: "
+            f"  {C['teal']}▸{C['reset']}  Enter 1–{len(available)}: ",
         ).strip()
         if not choice:
             continue

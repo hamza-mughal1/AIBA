@@ -9,8 +9,6 @@ from src.prompts import EffortConfig
 from src.services.rendering import C, hr, render_markdown
 from src.services.session import (
     SESSIONS_DIR,
-    load_session,
-    print_history,
     save_session,
     trim_history,
 )
@@ -28,6 +26,7 @@ _HELP = f"""  {C["bold"]}Commands:{C["reset"]}
 
 # _HELP += f"""  {C["teal"]}/load <name>{C["reset"]}  Load conversation from {SESSIONS_DIR}/<name>.json"""
 
+
 def run(
     agent_fn: Callable[..., AgentRunResult],
     initial_result: AgentRunResult,
@@ -41,7 +40,7 @@ def run(
         session_settings = {}
 
     print(
-        f"\n{C['dim']}Session started. Type /exit to quit, /clear to reset, /help for commands.{C['reset']}\n"
+        f"\n{C['dim']}Session started. Type /exit to quit, /clear to reset, /help for commands.{C['reset']}\n",
     )
 
     while True:
@@ -78,14 +77,14 @@ def run(
             try:
                 save_session(name, history, session_settings)
                 print(
-                    f"  {C['green']}✓{C['reset']} Session saved to {SESSIONS_DIR / name.split('.')[0]}.json ({len(history)} messages)"
+                    f"  {C['green']}✓{C['reset']} Session saved to {SESSIONS_DIR / name.split('.')[0]}.json ({len(history)} messages)",
                 )
             except Exception as exc:
                 print(f"  {C['red']}✗{C['reset']} Failed to save: {exc}")
             continue
 
         # ----- This is commented out to not include the load command in the REPL for now, as it is disorienting the UX -----
-        
+
         # if lower.startswith("/load "):
         #     raw = user_input[6:].strip()
         #     name = Path(raw).stem
@@ -139,7 +138,7 @@ def run(
         except UsageLimitExceeded as exc:
             print(f"\n  {C['yellow']}⚠{C['reset']}  Resource limit hit: {exc}")
             print(
-                f"  {C['dim']}Try a shorter prompt or use /clear to reset.{C['reset']}"
+                f"  {C['dim']}Try a shorter prompt or use /clear to reset.{C['reset']}",
             )
         except Exception as exc:
             print(f"\n  {C['red']}✗{C['reset']}  Error: {type(exc).__name__}: {exc}")

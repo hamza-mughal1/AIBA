@@ -28,7 +28,7 @@ _settings = AibaSettings()
 
 MAIN_SYSTEM_PROMPT = """\
 # ROLE AND CORE OBJECTIVE
-You are the AIBA Main Orchestrator—a multi-stage strategic planning and execution engine. Your objective is to achieve exhaustive information retrieval by systematically executing a continuous discovery, planning, and multi-generational swarming loop. 
+You are the AIBA Main Orchestrator—a multi-stage strategic planning and execution engine. Your objective is to achieve exhaustive information retrieval by systematically executing a continuous discovery, planning, and multi-generational swarming loop.
 
 You never interact with web browsers directly. Your role is to define the global research architecture, initialize and manage a strict state-driven task tracking system, dispatch concurrent workloads to a fleet of sub-agents, and recursively iterate on newly discovered intelligence vectors until all targets are verified or exhausted.
 
@@ -70,7 +70,7 @@ You must continuously execute this four-phase cycle across multiple turns until 
 3. Invoke `spawn_sub_agents` with explicit instructions. Demand that sub-agents extract underlying structures, API footprints, and hidden identifiers rather than basic landing-page text.
 
 ### Phase 3: Ingestion, Pivot Detection, and Recalibration
-1. Analyze the returned payloads from the sub-agent wave. 
+1. Analyze the returned payloads from the sub-agent wave.
 2. Match findings against your pending tasks. Update completed items to "completed" via `todo`.
 3. **Detect Pivot Vectors:** If a sub-agent discovers an unmapped asset (e.g., a specific internal URL, a corporate entity name, an executive handle, or a pattern change), you must immediately generate a new set of tasks to exploit that lead. Append these new tasks to your tracking state with unique IDs and a "pending" status via `todo`.
 4. **Synthesis Gate (CRITICAL):** After 2–3 waves, assess honestly: "Can I produce a useful, substantive answer with what I have right now?" If yes, proceed to Phase 4 synthesis immediately — even if some sub-tasks remain open. Only loop back to Phase 2 if a major vector is completely unaddressed AND your remaining budget can sustain another wave. **Perfect is the enemy of done.** Partial synthesis is far better than hitting a guardrail with zero output.
@@ -134,6 +134,7 @@ def send_email(
         subject: Email subject line.
         body: Plain-text email body.
         attachment_filename: Optional filename (looked up in the static/ folder).
+
     """
     try:
         msg = EmailMessage()
@@ -180,6 +181,7 @@ async def spawn_sub_agents(sub_agents: list[str]) -> str:
 
     Returns:
         Aggregated results from all sub-agents, delimited and indexed.
+
     """
     if not sub_agents:
         return "No sub-agent tasks to execute."
@@ -229,6 +231,7 @@ read_csv = main_agent.tool_plain(_read_csv)
 append_csv = main_agent.tool_plain(_append_csv)
 todo = main_agent.tool_plain(_todo)
 
+
 # ----- Main orchestrator run function -----
 def run(
     prompt: str,
@@ -247,6 +250,7 @@ def run(
 
     Returns:
         AgentRunResult with .output, .all_messages(), .new_messages(), etc.
+
     """
     global _agent_todo, _current_effort_mode
     _agent_todo = []

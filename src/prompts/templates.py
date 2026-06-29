@@ -15,7 +15,7 @@ default_template = Template(
         "Good for research, browsing, QA testing, and open-ended exploration."
     ),
     generate_prompt=lambda user_profile, extra: (
-        extra if extra else "Explore the web and complete the assigned task."
+        extra or "Explore the web and complete the assigned task."
     ),
 )
 
