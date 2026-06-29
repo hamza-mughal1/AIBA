@@ -1,4 +1,4 @@
-site_name: AIBA 
+site_name: AIBA
 site_description: Autonomous internet browsing agent
 site_author: AIBA
 site_url: https://aibacli.tech
@@ -47,7 +47,6 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -68,6 +67,7 @@ nav:
   - Home: index.md
   - Engineering: engineering.md
   - Getting Started: getting-started.md
+  - Contributing: contributing.md
   - Core Concepts:
       - Modes: core-concepts/modes.md
       - Templates: core-concepts/templates.md

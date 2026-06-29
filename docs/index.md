@@ -6,6 +6,14 @@
 
 # AIBA
 
+[![CI](https://github.com/hamza-mughal1/AIBA/actions/workflows/ci.yml/badge.svg)](https://github.com/hamza-mughal1/AIBA/actions)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-success)](https://github.com/hamza-mughal1/AIBA)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/)
+[![License: APL](https://img.shields.io/badge/License-APL-yellow.svg)](https://github.com/hamza-mughal1/AIBA/blob/main/LICENSE)
+[![Ruff](https://img.shields.io/badge/lint-ruff-261230)](https://docs.astral.sh/ruff/)
+[![Pyright](https://img.shields.io/badge/type--check-pyright-3572A5)](https://github.com/microsoft/pyright)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-blue?logo=linkedin)](https://www.linkedin.com/in/-hamza-mughal/)
+
 **Autonomous internet browsing agent. You define the goal. It handles the rest.**
 
 ---
