@@ -155,9 +155,9 @@ def test_read_csv_repl_mode_no_restriction(temp_data_dir: Path):
     assert "ERROR" not in result
 
 
-def test_read_csv_no_header_rows_in_file():
+def test_read_csv_no_header_rows_in_file(temp_data_dir: Path):
     """A CSV file with no header row returns an error."""
-    (Path.cwd() / "data" / "noheader.csv").write_text("")
+    (temp_data_dir / "noheader.csv").write_text("")
 
     result = read_csv("noheader.csv")
     assert "ERROR" in result
